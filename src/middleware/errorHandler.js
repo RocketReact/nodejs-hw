@@ -1,4 +1,8 @@
 import { HttpError } from 'http-errors';
+
+/**
+ * @type {import('express').ErrorRequestHandler}
+ */
 export const errorHandler = (err, req, res, next) => {
   console.error(err);
   if (err instanceof HttpError) {

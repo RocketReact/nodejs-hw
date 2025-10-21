@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import pino from 'pino-http';
 import 'dotenv/config';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -12,9 +11,7 @@ const PORT = process.env.PORT ?? 3000;
 app.use(logger);
 app.use(express.json());
 app.use(cors());
-
-app.get(notesRoutes);
-
+app.use(notesRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 await connectMongoDB();

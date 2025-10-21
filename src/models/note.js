@@ -35,3 +35,4 @@ const noteSchema = new Schema(
     versionKey: false,
   },
 );
+export const Notes = model('Notes', noteSchema);
