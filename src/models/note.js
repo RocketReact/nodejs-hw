@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const noteSchema = new Schema(
   {
@@ -35,4 +35,5 @@ const noteSchema = new Schema(
     versionKey: false,
   },
 );
-export const Notes = model('Notes', noteSchema);
+// Третий параметр - явное имя коллекции в MongoDB
+export const Notes = model('Notes', noteSchema, 'notes');
