@@ -9,12 +9,11 @@ const noteSchema = new Schema(
     },
     content: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     tag: {
       type: String,
-      required: true,
       enum: [
         'Work',
         'Personal',
@@ -36,4 +35,4 @@ const noteSchema = new Schema(
   },
 );
 // Третий параметр - явное имя коллекции в MongoDB
-export const Notes = model('Notes', noteSchema, 'notes');
+export const Note = model('Note', noteSchema, 'notes');
