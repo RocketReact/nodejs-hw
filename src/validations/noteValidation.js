@@ -36,3 +36,23 @@ export const getAllNotesSchema = {
     }),
   }),
 };
+
+export const createNoteSchema = {
+  [Segments.BODY]: Joi.object({
+    title: Joi.string().min(3).trim().messages({
+      'string.base': 'Title must be a string',
+      'string.min': 'Title must be at least {#limit}',
+      'any.required': 'Title is required',
+    }),
+    content: Joi.string().min(3).max(500).trim().messages({
+      'string.base': 'Content must be a string',
+      'string.min': 'Title must be at least {#limit}',
+      'string.max': 'Title must be at most {#limit}',
+    }),
+    tag: Joi.string().messages({
+      'string.base': 'Tag must be a string',
+      'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
+      'any.required': 'Title is required',
+    }),
+  }),
+};
