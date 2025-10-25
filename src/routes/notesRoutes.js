@@ -7,12 +7,12 @@ import {
   updateNote,
 } from '../controllers/notesController.js';
 import { celebrate } from 'celebrate';
-import { getNotesValidationQuery } from '../validations/noteValidation.js';
+import { getAllNotesSchema } from '../validations/noteValidation.js';
 
 const router = Router();
 
 //get all notes
-router.get('/notes', celebrate(getNotesValidationQuery), getAllNotes);
+router.get('/notes', celebrate(getAllNotesSchema), getAllNotes);
 //get notes by id
 router.get('/notes/:noteId', getNoteById);
 
