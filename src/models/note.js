@@ -23,5 +23,9 @@ const noteSchema = new Schema(
     versionKey: false,
   },
 );
+
+// Создание текстового индекса для полей title и content
+noteSchema.index({ title: 'text', content: 'text' });
+
 // Третий параметр - явное имя коллекции в MongoDB
 export const Note = model('Note', noteSchema, 'notes');

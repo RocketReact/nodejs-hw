@@ -20,7 +20,7 @@ export const getAllNotesSchema = {
         'string.base': 'Tag must be a string',
         'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
       }),
-    search: Joi.string().min(1).trim().messages({
+    search: Joi.string().allow('').trim().messages({
       'string.base': 'Search must be a string',
     }),
     page: Joi.number().integer().min(1).default(1).messages({
@@ -39,19 +39,18 @@ export const getAllNotesSchema = {
 
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(3).trim().required().messages({
+    title: Joi.string().min(1).trim().messages({
       'string.base': 'Title must be a string',
       'string.min': 'Title must be at least {#limit} characters',
       'any.required': 'Title is required',
     }),
-    content: Joi.string().min(3).max(500).trim().messages({
+    content: Joi.string().min(1).max(500).trim().messages({
       'string.base': 'Content must be a string',
       'string.min': 'Title must be at least {#limit} characters',
       'string.max': 'Title must be at most {#limit} characters',
     }),
     tag: Joi.string()
       .valid(...TAGS)
-      .required()
       .messages({
         'string.base': 'Tag must be a string',
         'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
@@ -62,18 +61,25 @@ export const createNoteSchema = {
 export const updateNoteSchema = {
   ...noteIdSchema,
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(3).trim().messages({
+    title: Joi.string().min(1).trim().messages({
       'string.base': 'Title must be a string',
       'string.min': 'Title must be at least {#limit} characters',
     }),
-    content: Joi.string().min(3).max(500).trim().messages({
+    content: Joi.string().min(1).allow('').max(500).trim().messages({
       'string.base': 'Content must be a string',
       'string.min': 'Title must be at least {#limit} characters',
       'string.max': 'Title must be at most {#limit} characters',
     }),
-    tag: Joi.string().messages({
-      'string.base': 'Tag must be a string',
-      'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
+    tag: Joi.string()
+      .valid(...TAGS)
+      .messages({
+        'string.base': 'Tag must be a string',
+        'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
+      }),
+  })
+    .or('title', 'content', 'tag')
+    .messages({
+      'object.missing':
+        'At least one field (title, content, or tag) must be provided',
     }),
-  }),
 };

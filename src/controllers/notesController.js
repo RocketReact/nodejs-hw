@@ -10,8 +10,8 @@ export const getAllNotes = async (req, res, next) => {
   }
   if (search) {
     notesQuery.or([
-      { title: { $regex: search, $options: 'i' } },
-      { content: { $regex: search, $options: 'i' } },
+      { title: { $text: search, $options: 'i' } },
+      { content: { $text: search, $options: 'i' } },
     ]);
   }
   const [notes, totalNotes] = await Promise.all([
