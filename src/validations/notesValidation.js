@@ -46,8 +46,8 @@ export const createNoteSchema = {
     }),
     content: Joi.string().max(500).allow('').trim().messages({
       'string.base': 'Content must be a string',
-      'string.min': 'Title must be at least {#limit} characters',
-      'string.max': 'Title must be at most {#limit} characters',
+      'string.min': 'Content must be at least {#limit} characters',
+      'string.max': 'Content must be at most {#limit} characters',
     }),
     tag: Joi.string()
       .valid(...TAGS)
@@ -66,8 +66,8 @@ export const updateNoteSchema = {
     }),
     content: Joi.string().allow('').max(500).trim().messages({
       'string.base': 'Content must be a string',
-      'string.min': 'Title must be at least {#limit} characters',
-      'string.max': 'Title must be at most {#limit} characters',
+      'string.min': 'Content must be at least {#limit} characters',
+      'string.max': 'Content must be at most {#limit} characters',
     }),
     tag: Joi.string()
       .valid(...TAGS)
