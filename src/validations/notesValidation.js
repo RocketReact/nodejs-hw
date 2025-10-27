@@ -39,22 +39,21 @@ export const getAllNotesSchema = {
 
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).trim().messages({
+    title: Joi.string().min(1).trim().required().messages({
       'string.base': 'Title must be a string',
       'string.min': 'Title must be at least {#limit} characters',
       'any.required': 'Title is required',
     }),
-    content: Joi.string().min(1).max(500).trim().messages({
+    content: Joi.string().max(500).allow('').trim().messages({
       'string.base': 'Content must be a string',
-      'string.min': 'Title must be at least {#limit} characters',
-      'string.max': 'Title must be at most {#limit} characters',
+      'string.min': 'Content must be at least {#limit} characters',
+      'string.max': 'Content must be at most {#limit} characters',
     }),
     tag: Joi.string()
       .valid(...TAGS)
       .messages({
         'string.base': 'Tag must be a string',
         'any.only': `Tag must be one of the: ${TAGS.join(', ')}`,
-        'any.required': 'Title is required',
       }),
   }),
 };
@@ -65,10 +64,10 @@ export const updateNoteSchema = {
       'string.base': 'Title must be a string',
       'string.min': 'Title must be at least {#limit} characters',
     }),
-    content: Joi.string().min(1).allow('').max(500).trim().messages({
+    content: Joi.string().allow('').max(500).trim().messages({
       'string.base': 'Content must be a string',
-      'string.min': 'Title must be at least {#limit} characters',
-      'string.max': 'Title must be at most {#limit} characters',
+      'string.min': 'Content must be at least {#limit} characters',
+      'string.max': 'Content must be at most {#limit} characters',
     }),
     tag: Joi.string()
       .valid(...TAGS)
