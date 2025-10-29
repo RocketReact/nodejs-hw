@@ -15,6 +15,11 @@ const userSchema = new Schema(
     password: {
       type: String,
       trim: true,
+      required: true,
+      validate: {
+        validator: (v) => v.length >= 8,
+        message: 'Password must be at least 8 characters',
+      },
     },
   },
   {
