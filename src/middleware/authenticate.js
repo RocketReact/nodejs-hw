@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { Session } from '../models/session.js';
 import { User } from '../models/user.js';
 
+///check that only authenticate users can CRUD notes
 export const authenticate = async (req, res, next) => {
   ///check access token
   if (!req.cookies.accessToken) {
