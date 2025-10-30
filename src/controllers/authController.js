@@ -70,4 +70,17 @@ export const refreshUserSession = async (req, res, next) => {
     message: 'Session refreshed',
   });
 };
-k;
+
+////Logout
+export const logoutUser = async (req, res, next) => {
+  const { sessionId } = req.cookies;
+
+  if (sessionId) {
+    await Session.deleteOne({ _id: sessionId });
+  }
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+  res.clearCookie('accessToken');
+
+  res.status(204).send();
+};
