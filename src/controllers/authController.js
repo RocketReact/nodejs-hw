@@ -21,6 +21,7 @@ export const registerUser = async (req, res, next) => {
   });
   const newSession = await createSession(newUser._id);
   setSessionCookies(res, newSession);
+  await newUser.save();
   res.status(201).json(newUser);
 };
 
@@ -53,9 +54,9 @@ export const refreshUserSession = async (req, res, next) => {
   if (!session) {
     return next(createHttpError(401, 'Session not found'));
   }
-  const isRefreshTokenValid =
+  const isRefreshTokenExpired =
     Date.now() > session.refreshTokenValidUntil.getTime();
-  if (isRefreshTokenValid) {
+  if (isRefreshTokenExpired) {
     return next(createHttpError(401, 'Refresh token expired'));
   }
   await Session.deleteOne({

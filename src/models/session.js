@@ -5,6 +5,8 @@ const sessionSchema = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'User', //применять сессию к user c userId модели/коллекции User
+      //  (MongoDB автоматически создает _id при регистрации)
     },
     accessToken: {
       type: String,
