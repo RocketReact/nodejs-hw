@@ -12,6 +12,7 @@ import {
   refreshUserSession,
   registerUser,
   requestResetEmail,
+  resetPassword,
 } from '../controllers/authController.js';
 const router = Router();
 
