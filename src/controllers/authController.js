@@ -7,27 +7,27 @@ import jwt from 'jsonwebtoken';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { sendEmail } from '../utils/sendEmail.js';
+import { sendEmail } from '../utils/sendMail.js';
 
-////Reset password
+///Reset password
 export const resetPassword = async (req, res, next) => {
   const { token, password } = req.body;
 
   //validate token
   let payload;
   try {
-    payload = jwt.verify(token, process.env.SESSION_SECRET);
+    payload = jwt.verify(token, process.env.JWT_SECRET);
   } catch {
     return next(createHttpError(401, 'Invalid or expired token'));
   }
 
   //find user
   const user = await User.findOne({
-    _id: payload.sub,
+    _id: payload.id,
     email: payload.email,
   });
   if (!user) {
-    next(createHttpError(401, 'User not found!'));
+    return next(createHttpError(401, 'User not found!'));
   }
 
   //create new password
@@ -35,7 +35,7 @@ export const resetPassword = async (req, res, next) => {
   await User.updateOne({ _id: payload.id }, { password: hashedPassword });
 
   //delete all old sessions
-  await Session.deleteMany({
+  await Session.deleteOne({
     userId: user._id,
   });
 
@@ -65,7 +65,7 @@ export const requestResetEmail = async (req, res, next) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: user.username,
-    link: `${process.env.FRONTEND_DOMAIN}/request-password?token=${resetToken}`,
+    link: `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`,
   });
   try {
     await sendEmail({

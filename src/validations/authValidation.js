@@ -2,7 +2,7 @@ import { Segments, Joi } from 'celebrate';
 
 export const requestResetEmailSchema = {
   [Segments.BODY]: Joi.object({
-    email: Joi.string().required(),
+    email: Joi.string().email().required(),
   }),
 };
 
