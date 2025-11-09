@@ -9,7 +9,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { sendEmail } from '../utils/sendEmail.js';
 
-////Reset password
+///Reset password
 export const resetPassword = async (req, res, next) => {
   const { token, password } = req.body;
 
