@@ -21,6 +21,11 @@ const userSchema = new Schema(
         message: 'Password must be at least 8 characters',
       },
     },
+    avatar: {
+      type: String,
+      required: false,
+      default: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
+    },
   },
   {
     timestamps: true,

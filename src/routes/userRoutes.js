@@ -1,5 +1,5 @@
 import router from './notesRoutes.js';
-import { updateUserAvatar } from '../controllers/authController.js';
+import { updateUserAvatar } from '../controllers/userController.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { upload } from '../middleware/multer.js';
 
