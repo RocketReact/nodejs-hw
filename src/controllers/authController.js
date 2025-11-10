@@ -32,7 +32,7 @@ export const resetPassword = async (req, res, next) => {
 
   //create new password
   const hashedPassword = await bcrypt.hash(password, 10);
-  await User.updateOne({ _id: payload.id }, { password: hashedPassword });
+  await User.updateOne({ _id: payload.sub }, { password: hashedPassword });
 
   //delete all old sessions
   await Session.deleteMany({
