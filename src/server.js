@@ -19,8 +19,8 @@ app.use(cors());
 app.use(authRoutes);
 app.use(notesRoutes);
 app.use(userRoutes);
-app.use(errors()); //celebrate validation errors
 app.use(notFoundHandler);
+app.use(errors()); //celebrate validation errors
 app.use(errorHandler);
 await connectMongoDB();
 app.listen(PORT, () => {
