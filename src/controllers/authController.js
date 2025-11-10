@@ -23,11 +23,11 @@ export const resetPassword = async (req, res, next) => {
 
   //find user
   const user = await User.findOne({
-    _id: payload.id,
+    _id: payload.sub,
     email: payload.email,
   });
   if (!user) {
-    return next(createHttpError(401, 'User not found!'));
+    return next(createHttpError(404, 'User not found!'));
   }
 
   //create new password
@@ -35,7 +35,7 @@ export const resetPassword = async (req, res, next) => {
   await User.updateOne({ _id: payload.id }, { password: hashedPassword });
 
   //delete all old sessions
-  await Session.deleteOne({
+  await Session.deleteMany({
     userId: user._id,
   });
 
@@ -51,7 +51,7 @@ export const requestResetEmail = async (req, res, next) => {
   if (!user) {
     return res
       .status(200)
-      .json({ message: 'Password reset email sent successfully' });
+      .json({ message: 'If this email exists, a reset link has been sent' });
   }
   const resetToken = jwt.sign(
     { sub: user._id, email },
