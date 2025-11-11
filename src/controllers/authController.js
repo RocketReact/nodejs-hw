@@ -58,7 +58,7 @@ export const requestResetEmail = async (req, res, next) => {
     process.env.JWT_SECRET,
     { expiresIn: '15m' },
   );
-  const templatePath = path.resolve('/src/templates/reset-password-email.html');
+  const templatePath = path.resolve('src/templates/reset-password-email.html');
   const templateSource = await fs.readFile(templatePath, 'utf-8');
   const template = handlebars.compile(templateSource);
   const html = template({
