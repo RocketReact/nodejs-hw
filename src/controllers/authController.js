@@ -32,7 +32,7 @@ export const resetPassword = async (req, res, next) => {
 
   //create new password
   const hashedPassword = await bcrypt.hash(password, 10);
-  await User.updateOne({ _id: payload.id }, { password: hashedPassword });
+  await User.updateOne({ _id: payload.sub }, { password: hashedPassword });
 
   //delete all old sessions
   await Session.deleteMany({
@@ -58,9 +58,7 @@ export const requestResetEmail = async (req, res, next) => {
     process.env.JWT_SECRET,
     { expiresIn: '15m' },
   );
-  const templatePath = path.resolve(
-    '../src/templates/reset-password-email.html',
-  );
+  const templatePath = path.resolve('src/templates/reset-password-email.html');
   const templateSource = await fs.readFile(templatePath, 'utf-8');
   const template = handlebars.compile(templateSource);
   const html = template({
